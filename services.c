@@ -22,7 +22,7 @@
 #include <errno.h>
 
 #include "sysdeps.h"
-
+#include "cutils/sockets.h"
 #define  TRACE_TAG  TRACE_SERVICES
 #include "adb.h"
 #include "file_sync_service.h"

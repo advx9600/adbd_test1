@@ -22,8 +22,10 @@
 #include "sysdeps.h"
 #include <sys/types.h>
 #if !ADB_HOST
-#include <cutils/properties.h>
+//#include <cutils/properties.h>
 #endif
+
+#define PROPERTY_VALUE_MAX 92
 
 #define  TRACE_TAG  TRACE_TRANSPORT
 #include "adb.h"
@@ -198,7 +200,7 @@ static void *server_socket_thread(void * arg)
 #undef write
 #define open    adb_open
 #define write   adb_write
-#include <hardware/qemu_pipe.h>
+//#include <hardware/qemu_pipe.h>
 #undef open
 #undef write
 #define open    ___xxx_open

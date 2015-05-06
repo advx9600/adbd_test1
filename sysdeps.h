@@ -260,8 +260,8 @@ extern char*  adb_strtok_r(char *str, const char *delim, char **saveptr);
 #else /* !_WIN32 a.k.a. Unix */
 
 #include "fdevent.h"
-#include <cutils/sockets.h>
-#include <cutils/misc.h>
+//#include <cutils/sockets.h>
+//#include <cutils/misc.h>
 #include <signal.h>
 #include <sys/wait.h>
 #include <sys/stat.h>

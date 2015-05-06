@@ -1,55 +1,31 @@
-SRCS+= adb.c
-SRCS+= adb_client.c
-SRCS+= adb_auth_host.c
-SRCS+= commandline.c
-SRCS+= console.c
-SRCS+= file_sync_client.c
-SRCS+= fdevent.c
-SRCS+= get_my_path_linux.c
-SRCS+= services.c
-SRCS+= sockets.c
-SRCS+= transport.c
-SRCS+= transport_local.c
-SRCS+= transport_usb.c
-SRCS+= usb_linux.c
-SRCS+= usb_vendors.c
-#SRCS+= fdevent.c
+SRCS+= one.c \
+        fdevent.c \
+        usb_linux_client.c \
+        adb_auth_client.c \
+        transport_local.c \
+        transport_usb.c \
+        transport.c \
+        sockets.c \
+        services.c \
+        framebuffer_service.c \
+        remount_service.c \
+        jdwp_service.c \
+        file_sync_service.c \
+        log_service.c
+#adb.c \
 
-ANDROID_PATH =/home/abc/Public/android/android4.4/rongpin/android_release
+SRCS+=base64.c
+DIR="libcutils/"
+SRCS+= $(DIR)socket_inaddr_any_server.c
+SRCS+= $(DIR)socket_local_client.c
+SRCS+= $(DIR)socket_local_server.c
+SRCS+= $(DIR)socket_loopback_client.c
+SRCS+= $(DIR)socket_loopback_server.c
+SRCS+= $(DIR)socket_network_client.c
+SRCS+= $(DIR)list.c
+SRCS+= $(DIR)load_file.c
 
-
-VPATH+= $(ANDROID_PATH)/external/openssl/ssl
-
-
-
-VPATH+= $(ANDROID_PATH)/system/core/libcutils
-SRCS+= socket_inaddr_any_server.c
-SRCS+= socket_local_client.c
-SRCS+= socket_local_server.c
-SRCS+= socket_loopback_client.c
-SRCS+= socket_loopback_server.c
-SRCS+= socket_network_client.c
-SRCS+= list.c
-SRCS+= load_file.c
-
-VPATH+= $(ANDROID_PATH)/system/core/libzipfile
-SRCS+= centraldir.c
-SRCS+= zipfile.c
-
-VPATH+= $(ANDROID_PATH)/external/zlib/src
-SRCS+= adler32.c
-SRCS+= compress.c
-SRCS+= crc32.c
-SRCS+= deflate.c
-SRCS+= infback.c
-SRCS+= inffast.c
-SRCS+= inflate.c
-SRCS+= inftrees.c
-SRCS+= trees.c
-SRCS+= uncompr.c
-SRCS+= zutil.c
-
-CPPFLAGS+= -DADB_HOST=1
+CPPFLAGS+= -DADB_HOST=0
 CPPFLAGS+= -DHAVE_FORKEXEC=1
 CPPFLAGS+= -DHAVE_SYMLINKS
 CPPFLAGS+= -DHAVE_TERMIO_H
@@ -65,17 +41,20 @@ CFLAGS+= -O2 -g -Wall -Wno-unused-parameter
 LIBS= -lrt -lpthread
 LIBS+= -L./openssl/openssl-1.0.2a/_install/lib -lssl -lcrypto  -ldl
 
-TOOLCHAIN= /home/abc/Public/compiler/toolschain/4.4.3/bin/arm-none-linux-gnueabi-
+#TOOLCHAIN= /home/abc/Public/compiler/toolschain/4.4.3/bin/arm-none-linux-gnueabi-
 
 CC= $(TOOLCHAIN)gcc
 LD= $(TOOLCHAIN)gcc
 
 OBJS= $(SRCS:.c=.o)
 
-all: adb
+main:
+	$(CC) $(SRCS) $(LDFLAGS) $(LIBS) $(CPPFLAGS)
 
-adb: $(OBJS)
-	$(LD) -o $@ $(LDFLAGS) $(OBJS) $(LIBS)
+#all: adb
+
+#adb: $(OBJS)
+#	$(LD) -o $@ $(LDFLAGS) $(OBJS) $(LIBS)
 
 clean:
-	rm -rf $(OBJS)
+	rm -rf $(OBJS) a.out
